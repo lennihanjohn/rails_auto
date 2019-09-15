@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  username: root
+  password: password
+  host: 127.0.0.1
+  port: 3306
+
+development:
+  <<: *default
+  database: my_vehicles
+
+test:
+  <<: *default
+  database: my_vehicles
+
+production:
+  <<: *default
+  database: my_vehicles
