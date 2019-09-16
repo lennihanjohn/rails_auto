@@ -1,0 +1,2 @@
+class TypeOfRepair < ApplicationRecord
+end

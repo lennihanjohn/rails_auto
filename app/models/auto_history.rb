@@ -1,0 +1,2 @@
+class AutoHistory < ApplicationRecord
+end
