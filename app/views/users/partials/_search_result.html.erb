@@ -1,0 +1,23 @@
+<table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">email</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td><%= user.email %></td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr> 
+            <% end %>
+        </tbody>
+      </table>
+      <div class="digg_pagination">
+        <%= js_will_paginate @users %>
+       </div>
