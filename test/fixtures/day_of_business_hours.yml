@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: day_of_business_hours
+#
+#  id             :bigint           not null, primary key
+#  day_of_week_id :bigint
+#  open_at        :datetime
+#  close_at       :datetime
+#  is_overlap     :boolean
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the

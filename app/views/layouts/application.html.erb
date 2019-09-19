@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsTemplate</title>
+    <title>Max's place</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
 
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+      <% if current_user.present? %>
+        <div class="wrapper">
+            <div class="sidebar" data-color="azure" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+                <!--
+            Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    
+            Tip 2: you can also add an image using data-image tag -->
+                <%= render 'layouts/sidebar' %>
+            </div>
+            <div class="main-panel">
+                <!-- Navbar -->
+                <%= render 'layouts/navbar' %>
+                <!-- End Navbar -->
+                <div class="content">
+                  <%= yield %>
+                </div>
+                <footer class="footer ">
+                  <%= render 'layouts/footer' %>
+                </footer>
+            </div>
+        </div>
+      <% else %>
+      <%= yield %>
+      <% end %>
+     
   </body>
 </html>

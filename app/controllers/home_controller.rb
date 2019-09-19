@@ -1,6 +1,11 @@
 class HomeController < ApplicationController
 
     def index
-        render layout: false
+       
+        if current_user.present?
+            redirect_to pages_path
+        else
+            render layout: false
+        end
     end
 end

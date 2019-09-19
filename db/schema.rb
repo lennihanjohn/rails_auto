@@ -24,11 +24,11 @@ ActiveRecord::Schema.define(version: 2019_09_15_101914) do
 
   create_table "auto_history_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "auto_history_id"
-    t.bigint "type_of_repairs_id"
+    t.bigint "type_of_repair_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["auto_history_id"], name: "index_auto_history_types_on_auto_history_id"
-    t.index ["type_of_repairs_id"], name: "index_auto_history_types_on_type_of_repairs_id"
+    t.index ["type_of_repair_id"], name: "index_auto_history_types_on_type_of_repair_id"
   end
 
   create_table "bookings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_09_15_101914) do
   create_table "type_of_repairs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
     t.text "desc"
-    t.integer "time"
+    t.integer "repair_time"
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2019_09_15_101914) do
   add_foreign_key "auto_histories", "users"
   add_foreign_key "auto_histories", "vehicles"
   add_foreign_key "auto_history_types", "auto_histories"
-  add_foreign_key "auto_history_types", "type_of_repairs", column: "type_of_repairs_id"
+  add_foreign_key "auto_history_types", "type_of_repairs"
   add_foreign_key "bookings", "users"
   add_foreign_key "day_of_business_hours", "day_of_weeks"
   add_foreign_key "vehicles", "users"

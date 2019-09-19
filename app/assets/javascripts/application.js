@@ -23,4 +23,4 @@
 //= require material/bootstrap-notify
 //= require material/material-dashboard
 //= require material/demo
-//= require_tree .
+//= require cable

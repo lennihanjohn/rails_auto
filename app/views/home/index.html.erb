@@ -9,16 +9,13 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Resume - Start Bootstrap Theme</title>
+  <title>Welcome to Max's auto shop</title>
 
   <!-- Bootstrap core CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
   <!-- Custom fonts for this template -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
  
   <!-- Custom styles for this template -->
@@ -65,7 +62,7 @@
             <div class="intro-text">
               <div class="intro-lead-in">Welcome To Max's auto shop!</div>
               <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
-              <a class="btn btn-primary btn-xl te3xt-uppercase js-scroll-trigger" href="#services">Book appointment</a>
+              <a class="btn btn-primary btn-xl te3xt-uppercase js-scroll-trigger" >Book appointment</a>
             </div>
           </div>
         </header>
@@ -484,11 +481,14 @@
               <div class="col-md-4">
                 <ul class="list-inline quicklinks">
                   <li class="list-inline-item">
+                    <%= link_to('Staff Login', new_user_session_path, class: "btn btn-primary") %>  
+                  </li>
+                  <!-- <li class="list-inline-item">
                     <a href="#">Privacy Policy</a>
                   </li>
                   <li class="list-inline-item">
                     <a href="#">Terms of Use</a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </div>
