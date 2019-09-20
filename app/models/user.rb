@@ -28,6 +28,7 @@ class User < ApplicationRecord
   
   has_many :vehicles
   has_many :bookings
+  has_many :auto_histories
 
   def active_for_authentication?
     super && self.id == 1 # i.e. super && self.is_active
@@ -36,5 +37,8 @@ class User < ApplicationRecord
   def inactive_message
     "sorry you are not authorized to login."
   end
-
+  
+  def self.search(search)
+      self.where("email like ? Or name like ? Or phone_number like ? ", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
 end

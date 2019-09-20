@@ -1,0 +1,37 @@
+
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title text-center"><%= @user.email %></h4>
+
+    </div>
+    <div class="modal-body">
+        <%= form_for @user, url: {action: "update"}, html: { class: 'form' , remote: true } do |f| %>
+
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">History</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Booking</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+              <% @user.auto_histories.each do |history| %>
+              history
+              <% end %>  
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <% @user.bookings.each do |booking| %>
+                booking
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+      <%= link_to 'Close', "#", class: "btn btn-sm btn-default float-right", data: {dismiss: "modal"} %>
+
+    </div>
+  </div>
+</div>

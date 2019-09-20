@@ -1,6 +1,17 @@
 <% if @users.blank? %>
     no user yet!
 <% else %>
+    <div id="user_modal" class="modal fade"></div>
+
+    <%= form_tag(users_path, :method=>:get, remote: true) do %>
+        <div class="row pull-right">
+            <div class="col-xs-12 col-sm-6">
+                <%= text_field_tag :search, params[:search], placeholder:"Search for user...", class:"form-control" %>
+            </div>
+            <%= hidden_field_tag :role, params[:role] %>
+            <%= submit_tag 'search', class:"btn btn-success" %>
+        </div>
+    <% end %>
 	<!-- SEARCH RESULTS / PAGE CONTENT -->
     <div id="search_result">
         <%= render 'users/partials/search_result' %>

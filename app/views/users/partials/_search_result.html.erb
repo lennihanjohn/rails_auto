@@ -1,23 +1,26 @@
 <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">email</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-            <% @users.each do |user| %>
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">History</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <% @users.each do |user| %>
             <tr>
                 <td><%= user.email %></td>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
+                <td><%= user.name %></td>
+                <td><%= user.phone_number %></td>
+                <th>
+                    <%= link_to('<i class="fa fa-list-ul" aria-hidden="true"></i>'.html_safe, user_path(id: user.id), class:"btn btn-warning btn-sm", remote: true) %>
+                </th>
             </tr> 
-            <% end %>
-        </tbody>
-      </table>
-      <div class="digg_pagination">
-        <%= js_will_paginate @users %>
-       </div>
+        <% end %>
+    </tbody>
+</table>
+<div class="digg_pagination float-center">
+<%= js_will_paginate @users %>
+</div>

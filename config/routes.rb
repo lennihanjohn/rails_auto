@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :pages
   resources :users
   resources :type_of_repairs
+  resources :vehicles
+  resources :type_of_repairs
+  resources :type_of_repairs
+  resources :type_of_repairs
   # get 'page/index'
   get 'home/index'
   root to: "home#index"

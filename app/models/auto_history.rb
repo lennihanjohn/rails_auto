@@ -12,4 +12,5 @@
 
 class AutoHistory < ApplicationRecord
     has_many :auto_history_types
+    belongs_to :vehicle
 end
