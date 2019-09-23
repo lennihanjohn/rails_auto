@@ -11287,7 +11287,7 @@ fieldset[disabled] .form-group .form-control {
     .navbar.bg-dark .navbar-toggler .navbar-toggler-icon {
       background-color: #fff; }
   .navbar.navbar-transparent {
-    background-color: transparent !important;
+    background-color: #999999 !important;
     -webkit-box-shadow: none;
             box-shadow: none;
     padding-top: 25px; }

@@ -1,9 +1,9 @@
-<% if @users.blank? %>
-    no user yet!
+<% if @vehicles.blank? %>
+    no vehicle yet!
 <% else %>
-    <div id="user_modal" class="modal fade"></div>
+    <div id="vehicle_modal" class="modal fade"></div>
 
-    <%= form_tag(users_path, :method=>:get, remote: true) do %>
+    <%= form_tag(vehicles_path, :method=>:get, remote: true) do %>
         <div class="row pull-right">
             <div class="col-xs-12 col-sm-6">
                 <%= text_field_tag :search, params[:search], placeholder:"Search for user...", class:"form-control" %>
@@ -14,7 +14,7 @@
     <% end %>
 	<!-- SEARCH RESULTS / PAGE CONTENT -->
     <div id="search_result">
-        <%= render 'users/partials/table' %>
+        <%= render 'vehicles/partials/table' %>
     </div>
 
 

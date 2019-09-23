@@ -1,0 +1,27 @@
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Model</th>
+        <th scope="col">Made</th>
+        <th scope="col">vin</th>
+        <th scope="col">Histories</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <% @vehicles.each do |vehicle| %>
+            <tr>
+                <td><%= vehicle.model %></td>
+                <td><%= vehicle.make %></td>
+                <td><%= vehicle.vin %></td>
+                <th>
+                    <%= link_to('<i class="fa fa-list-ul" aria-hidden="true"></i>'.html_safe, vehicle_path(id: vehicle.id), class:"btn btn-warning btn-sm", remote: true) %>
+                </th>
+            </tr> 
+        <% end %>
+    </tbody>
+</table>
+<div class="digg_pagination float-center">
+<%= js_will_paginate @vehicles %>
+</div>

@@ -1,0 +1,35 @@
+
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title text-center"><%= @vehicle.vin %></h4>
+
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Repaired Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @vehicle.auto_histories.each do |history| %>
+                    <tr>
+                        <td><%= history.created_at %></td>
+                        <td><%= history.user.name %></td>
+                        <td><%= history.auto_history_types.each{|type| type.type_of_repair.code}.join(", ") %></td>
+                    </tr> 
+                <% end %>
+            </tbody>
+        </table>
+
+      <%= link_to 'Close', "#", class: "btn btn-sm btn-default float-right", data: {dismiss: "modal"} %>
+
+    </div>
+  </div>
+</div>

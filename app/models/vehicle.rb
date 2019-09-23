@@ -15,4 +15,9 @@
 class Vehicle < ApplicationRecord
     has_many :auto_histories
     belongs_to :user
+
+    def self.search(search)
+        self.includes(:user).where("user.email like ? Or user.phone_number like ? Or make like ? Or model like ? Or color like ? Or vin like ? ", 
+            "%#{search}%", "%#{search}%", "%#{search}%","%#{search}%", "%#{search}%", "%#{search}%")
+    end
 end
