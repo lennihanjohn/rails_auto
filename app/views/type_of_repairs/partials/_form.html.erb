@@ -1,0 +1,49 @@
+
+<div class="modal-body">
+  <%= form_for @type_of_repair, remote:true do |f| %>
+
+
+    <div class="form-group col-xs-12">
+      <%= f.text_field :code, class:"form-control", required:true, placeholder:'service name' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.text_field :desc, class:"form-control", required:true, placeholder:'service desc' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.number_field :repair_time, step: 0.5, class:"form-control mdb-select md-form block", required:true, placeholder:'service time ( Hour unit)' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.number_field :price, class:"form-control mdb-select md-form block", required:true, placeholder:'service price (Dollar unit)' %>
+    </div>
+
+    <!-- action buttons -->
+    <div class="form-group col-xs-12">
+        <%= f.submit "submit", class:"btn-success" %>
+        <%= link_to 'Close', "#", class: "btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+    </div>
+
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+// $('#vip_list_end_date').datepicker({
+//   dateFormat: 'yy/mm/dd',
+//   onSelect: function(selected) {
+//     $("#vip_list_start_date").datepicker("option","maxDate", selected);
+//   },
+// });
+// $('#vip_list_start_date').datepicker({
+//   dateFormat: 'yy/mm/dd',
+//   minDate: 0,
+//   onSelect: function(selected) {
+//     $("#vip_list_end_date").datepicker("option","minDate", selected);
+//   },
+// });
+// $(".readonly").keydown(function(e){
+//   e.preventDefault();
+// });
+</script>

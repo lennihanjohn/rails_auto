@@ -12,5 +12,7 @@
 #
 
 class TypeOfRepair < ApplicationRecord
-    belongs_to :auto_history_type
+    # belongs_to :auto_history_type
+    validates_presence_of :code, :desc, :repair_time, :price
+    validates_uniqueness_of :code
 end

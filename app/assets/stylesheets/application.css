@@ -13,6 +13,8 @@
  *= require_self
  *= require material/material-dashboard.css
  *= require material/demo.css
+*= require sweetalert2
+
  */
 
 

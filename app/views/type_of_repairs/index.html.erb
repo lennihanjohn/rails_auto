@@ -1,0 +1,22 @@
+
+    <div id="type_of_repair_modal" class="modal fade"></div>
+
+    <%= form_tag(type_of_repairs_path, :method=>:get, remote: true) do %>
+        <div class="row pull-right">
+            <div class="col-xs-12 col-sm-6">
+                <%= text_field_tag :search, params[:search], placeholder:"Search for user...", class:"form-control" %>
+            </div>
+            <%= hidden_field_tag :role, params[:role] %>
+            <%= submit_tag 'search', class:"btn btn-success" %>
+            <%= link_to "add new", new_type_of_repair_path, remote: true, class:"btn btn-primary pull-right" %>
+
+        </div>
+    <% end %>
+	<!-- SEARCH RESULTS / PAGE CONTENT -->
+    <% if @type_of_repairs.blank? %>
+        no types yet! add new? 
+    <% else %>
+        <div id="search_result">
+            <%= render 'type_of_repairs/partials/table' %>
+        </div>
+    <% end %>

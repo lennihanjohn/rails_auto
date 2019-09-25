@@ -1,0 +1,28 @@
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">desc</th>
+        <th scope="col">repair_time</th>
+        <th scope="col">price</th>
+        <th scope="col"></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <% @type_of_repairs.each do |type_of_repair| %>
+            <tr>
+                <td><%= type_of_repair.code %></td>
+                <td><%= type_of_repair.desc %></td>
+                <td><%= type_of_repair.repair_time %></td>
+                <td><%= type_of_repair.price %></td>
+                <th>
+                    <%= link_to('<i class="fa fa-list-ul" aria-hidden="true"></i>'.html_safe, type_of_repair_path(id: type_of_repair.id), class:"btn btn-warning btn-sm", remote: true) %>
+                </th>
+            </tr> 
+        <% end %>
+    </tbody>
+</table>
+<div class="digg_pagination float-center">
+<%= js_will_paginate @type_of_repairs %>
+</div>
