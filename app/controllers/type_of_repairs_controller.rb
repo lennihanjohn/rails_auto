@@ -40,6 +40,19 @@ class TypeOfRepairsController < ApplicationController
         end
     end
 
+    def update
+        @type_of_repair = TypeOfRepair.find_by(id: params[:id])
+        if @type_of_repair.update(type_params)
+            @type_of_repairs  = TypeOfRepair.all.paginate(page: params[:page])
+        else
+            @errors = @type_of_repair.errors.full_messages.join("<br/>").html_safe
+        end
+        respond_to do |format|
+            format.html 
+            format.js
+        end
+    end
+
     def type_params
         params.require(:type_of_repair).permit(:code, :desc, :repair_time, :price)
     end

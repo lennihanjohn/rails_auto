@@ -1,23 +1,23 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th scope="col">Name</th>
-        <th scope="col">desc</th>
-        <th scope="col">repair_time</th>
-        <th scope="col">price</th>
-        <th scope="col"></th>
+        <th>Name</th>
+        <th>Desc</th>
+        <th>Time Cost(hrs)</th>
+        <th>Price</th>
+        <th></th>
 
         </tr>
     </thead>
     <tbody>
         <% @type_of_repairs.each do |type_of_repair| %>
             <tr>
-                <td><%= type_of_repair.code %></td>
+                <td><%= type_of_repair.name %></td>
                 <td><%= type_of_repair.desc %></td>
                 <td><%= type_of_repair.repair_time %></td>
-                <td><%= type_of_repair.price %></td>
+                <td><%= number_to_currency(type_of_repair.price) %></td>
                 <th>
-                    <%= link_to('<i class="fa fa-list-ul" aria-hidden="true"></i>'.html_safe, type_of_repair_path(id: type_of_repair.id), class:"btn btn-warning btn-sm", remote: true) %>
+                    <%= link_to('<i class="fa fa-pen" aria-hidden="true"></i>'.html_safe, edit_type_of_repair_path(id: type_of_repair.id), class:"btn btn-info btn-sm", remote: true) %>
                 </th>
             </tr> 
         <% end %>

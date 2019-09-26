@@ -10,6 +10,7 @@
 #  year       :date
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  vin        :string(255)
 #
 
 require 'test_helper'

@@ -3,7 +3,7 @@
 # Table name: type_of_repairs
 #
 #  id          :bigint           not null, primary key
-#  code        :string(255)
+#  name        :string(255)
 #  desc        :text(65535)
 #  repair_time :integer
 #  price       :integer
@@ -13,6 +13,10 @@
 
 class TypeOfRepair < ApplicationRecord
     # belongs_to :auto_history_type
-    validates_presence_of :code, :desc, :repair_time, :price
-    validates_uniqueness_of :code
+    validates_presence_of :name, :desc, :repair_time, :price
+    validates_uniqueness_of :name
+
+    def self.search(search)
+        self.where("name like ?", "%#{search}%" )
+    end
 end

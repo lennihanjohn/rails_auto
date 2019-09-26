@@ -3,7 +3,7 @@
 # Table name: type_of_repairs
 #
 #  id          :bigint           not null, primary key
-#  code        :string(255)
+#  name        :string(255)
 #  desc        :text(65535)
 #  repair_time :integer
 #  price       :integer
