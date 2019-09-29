@@ -10,4 +10,6 @@
 
 class DayOfWeek < ApplicationRecord
     has_one :day_of_business_hour
+    accepts_nested_attributes_for :day_of_business_hour
+
 end

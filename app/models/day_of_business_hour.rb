@@ -4,8 +4,8 @@
 #
 #  id             :bigint           not null, primary key
 #  day_of_week_id :bigint
-#  open_at        :datetime
-#  close_at       :datetime
+#  open_at        :time
+#  close_at       :time
 #  is_overlap     :boolean
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

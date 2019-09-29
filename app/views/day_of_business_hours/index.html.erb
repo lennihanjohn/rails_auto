@@ -1,0 +1,12 @@
+<% if @business_hours.blank? %>
+    no user yet!
+<% else %>
+    <div id="business_hour_modal" class="modal fade"></div>
+
+	<!-- SEARCH RESULTS / PAGE CONTENT -->
+    <div id="search_result">
+        <%= render 'day_of_business_hours/partials/table' %>
+    </div>
+
+
+<% end %>

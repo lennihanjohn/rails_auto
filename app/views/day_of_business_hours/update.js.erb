@@ -1,0 +1,24 @@
+<% if @errors.nil? %>
+  swal({
+    title: "success",
+    text: "saved",
+    type: "success",
+    showConfirmButton: true,
+    allowEscapeKey: false
+  }).then((result) => {
+    if (result) {
+        $("#business_hour_modal").modal("hide")
+        $("#business_hour_modal").html("<%= j render partial: 'day_of_business_hours/partials/table' %>")
+    }
+  });
+
+<% else %>
+console.log("hello")
+swal({
+    title: "Oops",
+    text: "<%= @errors.html_safe %>",
+    type: "error"
+})
+
+
+<% end %>

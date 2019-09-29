@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_011000) do
+ActiveRecord::Schema.define(version: 2019_09_27_012323) do
 
   create_table "auto_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 2019_09_26_011000) do
 
   create_table "day_of_business_hours", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "day_of_week_id"
-    t.datetime "open_at"
-    t.datetime "close_at"
+    t.time "open_at"
+    t.time "close_at"
     t.boolean "is_overlap"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

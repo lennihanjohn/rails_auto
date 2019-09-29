@@ -1,0 +1,24 @@
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Detail</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <% @business_hours.each do |day_of_week| %>
+            <tr>
+                <td><%= day_of_week.day_of_week %></td>
+                <td><%= day_of_week.day_of_business_hour.open_at.strftime("%H:%M") %></td>
+                <td><%= day_of_week.day_of_business_hour.close_at.strftime("%H:%M")   %></td>
+                <th>
+                    <%= link_to('<i class="fa fa-pen" aria-hidden="true"></i>'.html_safe, edit_day_of_business_hour_path(id:day_of_week.day_of_business_hour.id), class:"btn btn-info btn-sm", remote: true) %>
+                </th>
+            </tr> 
+        <% end %>
+    </tbody>
+</table>
+

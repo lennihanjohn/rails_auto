@@ -1,0 +1,32 @@
+
+<div class="modal-body">
+  <%= form_for @day_of_week, remote:true do |f| %>
+
+
+    <div class="form-group col-xs-12">
+      <%= f.label :open_at, 'Open at:' %>
+      <%= f.select :open_at, options_for_select(@time_period,  @day_of_week.open_at.strftime("%H:%M %p")), {}, {readonly:true, class: "form-control" }%>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.label :close_at, 'Close at:' %>
+      <%= f.select :close_at, options_for_select(@time_period,  @day_of_week.close_at.strftime("%H:%M %p")), {}, {readonly:true, class: "form-control" }%>
+    </div>
+
+    <div class="garage-title form-check">
+      <%= f.label :is_overlap %>:
+      <%= f.label :is_overlap, "No", value: "false", class: 'form-check-label' %>
+      <%= f.radio_button :is_overlap, false, checked: true %>
+      <%= f.label :is_overlap, "Yes", value: "true", class: 'form-check-label' %>
+      <%= f.radio_button :is_overlap, true %>
+
+    </div>
+
+    <!-- action buttons -->
+    <div class="form-group col-xs-12">
+        <%= f.submit "submit", class:"btn-success" %>
+        <%= link_to 'Close', "#", class: "btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+    </div>
+
+  <% end %>
+</div>

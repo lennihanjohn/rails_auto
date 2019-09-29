@@ -24,6 +24,7 @@
 //= require material/material-dashboard
 //= require material/demo
 //= require cable
+//= require jquery.timepicker.js
 
 
 //Override the default confirm dialog by rails
