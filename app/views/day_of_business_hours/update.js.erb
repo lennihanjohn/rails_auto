@@ -8,7 +8,7 @@
   }).then((result) => {
     if (result) {
         $("#business_hour_modal").modal("hide")
-        $("#business_hour_modal").html("<%= j render partial: 'day_of_business_hours/partials/table' %>")
+        $("#search_result").html("<%= j render partial: 'day_of_business_hours/partials/table' %>")
     }
   });
 

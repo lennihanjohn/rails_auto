@@ -1,0 +1,59 @@
+
+<div class="modal-body">
+  <%= form_for @booking, remote:true do |f| %>
+
+    <%= f.hidden_field :is_active,  value: true %>
+
+    <div class="form-group col-xs-12">
+      <%= text_field_tag :email, '', class:"form-control", required:true, placeholder:'user email' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= text_field_tag :name, '', class:"form-control", required:true, placeholder:'user name' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= text_field_tag :phone_number, '', class:"form-control", required:true, placeholder:'user phone number' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= text_field_tag :address, '', class:"form-control", required:true, placeholder:'user address' %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.label :repair_date, 'repair date:' %>
+      <%= f.text_field :repair_date, readonly:true, class: "form-control datepicker" %>
+
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= f.label :type_of_repair, 'type of service' %><br/>
+      <%= collection_select :repair, :type, @type_of_repairs, :id, :name, html_options = {class:"form-control"}  %>
+    </div>
+
+
+
+    <!-- action buttons -->
+    <div class="form-group col-xs-12">
+        <%= f.submit "submit", class:"btn-success" %>
+        <%= link_to 'Close', "#", class: "btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+    </div>
+
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+$('.datepicker').pickadate();
+
+// $('#vip_list_start_date').datepicker({
+//   dateFormat: 'yy/mm/dd',
+//   minDate: 0,
+//   onSelect: function(selected) {
+//     $("#vip_list_end_date").datepicker("option","minDate", selected);
+//   },
+// });
+// $(".readonly").keydown(function(e){
+//   e.preventDefault();
+// });
+</script>

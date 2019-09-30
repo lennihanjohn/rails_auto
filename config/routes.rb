@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   resources :pages
   resources :users
   resources :type_of_repairs
-  resources :vehicles do 
-    resources :bookings
-    resources :auto_histories
-  end
+  resources :vehicles
+  resources :auto_histories
+
+  resources :bookings
   resources :business_hours 
   resources :day_of_business_hours
   get 'home/index'

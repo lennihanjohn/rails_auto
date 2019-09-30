@@ -1,4 +1,6 @@
 class TypeOfRepairsController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :update]
+
     def index
         @type_of_repairs  = TypeOfRepair.all.paginate(page: params[:page])
         @type_of_repairs = params[:search].nil? ? @type_of_repairs : @type_of_repairs.search(params[:search])
@@ -54,6 +56,6 @@ class TypeOfRepairsController < ApplicationController
     end
 
     def type_params
-        params.require(:type_of_repair).permit(:code, :desc, :repair_time, :price)
+        params.require(:type_of_repair).permit(:name, :desc, :repair_time, :price)
     end
 end

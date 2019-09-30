@@ -1,0 +1,23 @@
+
+<div id="booking_modal" class="modal fade"></div>
+<%= form_tag(type_of_repairs_path, :method=>:get, remote: true) do %>
+    <div class="row pull-right">
+        <div class="col-xs-12 col-sm-6">
+            <%= text_field_tag :search, params[:search], placeholder:"Search for booking name...", class:"form-control" %>
+        </div>
+        <%= submit_tag 'search', class:"btn btn-success" %>
+        <%= link_to "new booking", new_booking_path, remote: true, class:"btn btn-primary pull-right" %>
+
+    </div>
+<% end %>
+<% if @bookings.blank? %>
+    no Booking yet!
+<% else %>
+    
+	<!-- SEARCH RESULTS / PAGE CONTENT -->
+    <div id="search_result">
+        <%= render 'bookings/partials/table' %>
+    </div>
+
+
+<% end %>
