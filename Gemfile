@@ -34,10 +34,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'jquery-timepicker-rails'
+gem 'jquery-ui-rails'
 
-# gem 'bootstrap-sass'
-# gem 'font-awesome-rails'
 gem "jquery-rails"
+
 gem 'popper_js', '~> 1.12.9'
 gem 'will_paginate', '~> 3.1.0'
 gem 'sweetalert2'

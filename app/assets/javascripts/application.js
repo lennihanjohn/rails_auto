@@ -14,7 +14,8 @@
 //= require turbolinks
 //= require sweetalert2
 //= require jquery
-//= require jquery_ujs
+//= require jquery-ui
+
 //= require popper
 //= require material/bootstrap-material-design
 //= require material/perfect-scrollbar.jquery.min
@@ -25,6 +26,7 @@
 //= require material/demo
 //= require cable
 //= require jquery.timepicker.js
+
 
 
 //Override the default confirm dialog by rails
