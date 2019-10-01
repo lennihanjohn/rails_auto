@@ -19,4 +19,9 @@ class TypeOfRepair < ApplicationRecord
     def self.search(search)
         self.where("name like ?", "%#{search}%" )
     end
+
+    def service_detail
+        return self.name + ' - ' + self.repair_time.to_s + 'hr(s)'
+    end
+
 end

@@ -30,13 +30,13 @@
         </div>
 
         <div class="form-group col-xs-12">
-          <%= f.label :repair_date, 'Pick service date:' %><br/>
+          <%= f.label :repair_date, 'Pick a service date(维修日期)):' %><br/>
           <%= f.text_field :repair_date, readonly:true, class: "form-control datepicker" %>
         </div>
 
         <div class="form-group col-xs-12">
           <%= f.label :type_of_repair, 'Type of service' %>
-          <%= collection_select(:repair, :type, @type_of_repairs, :id, :name, {}, {:class=>'form-control'}) %>
+          <%= collection_select(:repair, :type, @type_of_repairs, :id, :service_detail, {prompt: "please select service type(请选择维修服务)"}, {:class=>'form-control'}) %>
         </div>
 
 
@@ -49,9 +49,23 @@
       </div>
 
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        <p>Duis non arcu vel lectus vehicula lobortis. Sed nec risus orci. Sed commodo ipsum sit amet quam interdum aliquam. Integer metus erat, volutpat at eros sit amet, dictum gravida metus. Morbi vehicula malesuada velit ut fermentum. Praesent elit diam,
-          interdum non ligula vitae, tempus pretium puruson dui.</p>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :vehicle_vin, '', class:"form-control", required:true, placeholder:'Vehicle VIN(车VIN号)' %>
+        </div>
 
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :vehicle_year, '', class:"form-control", required:true, placeholder:'Year of the vehicle(车龄)' %>
+        </div>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :vehicle_made, '', class:"form-control", required:true, placeholder:'Vehicle made(车标)' %>
+        </div>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :vehicle_model, '', class:"form-control", required:true, placeholder:'Vehicle model(车款))' %>
+        </div>
+          <div id="reserve_time_period" class="form-group col-xs-12">
+            <%= label_tag :reserve_time, 'Close at:' %>
+            <%= select_tag :reserve_time, options_for_select(@business_hour, @start_at), {}, {readonly:true, class: "form-control" }%>
+          </div>
         <div class="mb-3 group-end">
           <%= f.submit "submit", class:"btn btn-info btn-sm" %>
           <a class="btn btn-warning btnPrevious btn-sm">Previous</a>
@@ -75,9 +89,16 @@ var dateToday = new Date();
   $('.btnNext').click(function() {
     $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
     const date = $("#booking_repair_date").val()
+    const service_type = $("#repair_type").val()
     if (date) {
       $.ajax ({
-        url: '/check_date?&date=' + date,
+        url: '/check_date',
+        type: "GET",
+        data: {"date": date, "service_type": service_type},
+        dataType: "html"
+        success: function(data) {
+          jQuery("#versionsDiv").html(data);
+        }
       })
     }
   });
