@@ -1,46 +1,89 @@
 
-<div class="modal-body">
   <%= form_for @booking, remote:true do |f| %>
+    <ul class="nav nav-tabs d-none" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+      </li>
+    </ul>
 
-    <%= f.hidden_field :is_active,  value: true %>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <%= f.hidden_field :is_active,  value: true %>
 
-    <div class="form-group col-xs-12">
-      <%= text_field_tag :email, '', class:"form-control", required:true, placeholder:'user email' %>
-    </div>
+        <div class="form-group col-xs-12">
+          <%= email_field_tag :email, '', class:"form-control", required:true, placeholder:'Your email(邮箱)' %>
+        </div>
 
-    <div class="form-group col-xs-12">
-      <%= text_field_tag :name, '', class:"form-control", required:true, placeholder:'user name' %>
-    </div>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :name, '', class:"form-control", required:true, placeholder:'Your name(姓名)' %>
+        </div>
 
-    <div class="form-group col-xs-12">
-      <%= text_field_tag :phone_number, '', class:"form-control", required:true, placeholder:'user phone number' %>
-    </div>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :phone_number, '', class:"form-control", required:true, placeholder:'Your phone number(电话号码)' %>
+        </div>
 
-    <div class="form-group col-xs-12">
-      <%= text_field_tag :address, '', class:"form-control", required:true, placeholder:'user address' %>
-    </div>
+        <div class="form-group col-xs-12">
+          <%= text_field_tag :address, '', class:"form-control", required:true, placeholder:'Your address(居住地址)' %>
+        </div>
 
-    <div class="form-group col-xs-12">
-      <%= f.label :repair_date, 'Pick service date:' %><br/>
-      <%= f.text_field :repair_date, readonly:true, class: "form-control datepicker" %>
+        <div class="form-group col-xs-12">
+          <%= f.label :repair_date, 'Pick service date:' %><br/>
+          <%= f.text_field :repair_date, readonly:true, class: "form-control datepicker" %>
+        </div>
 
-    </div>
-
-    <div class="form-group col-xs-12">
-      <%= f.label :type_of_repair, 'Type of service' %>
-      <%= collection_select(:repair, :type, @type_of_repairs, :id, :name, {}, {:class=>'form-control'}) %>
-    </div>
-
+        <div class="form-group col-xs-12">
+          <%= f.label :type_of_repair, 'Type of service' %>
+          <%= collection_select(:repair, :type, @type_of_repairs, :id, :name, {}, {:class=>'form-control'}) %>
+        </div>
 
 
-    <!-- action buttons -->
-    <div class="form-group col-xs-12">
-        <%= f.submit "submit", class:"btn-success" %>
-        <%= link_to 'Close', "#", class: "btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+        <div class="mb-3 group-end">
+          <a class="btn btn-info btn-sm btnNext pull-right">Next</a>
+          <%= link_to 'Close', "#", class: "btn btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+        </div>
+        <!--/. form element wrap -->
+
+      </div>
+
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <p>Duis non arcu vel lectus vehicula lobortis. Sed nec risus orci. Sed commodo ipsum sit amet quam interdum aliquam. Integer metus erat, volutpat at eros sit amet, dictum gravida metus. Morbi vehicula malesuada velit ut fermentum. Praesent elit diam,
+          interdum non ligula vitae, tempus pretium puruson dui.</p>
+
+        <div class="mb-3 group-end">
+          <%= f.submit "submit", class:"btn btn-info btn-sm" %>
+          <a class="btn btn-warning btnPrevious btn-sm">Previous</a>
+
+          <%= link_to 'Close', "#", class: "btn btn-sm btn-light float-right", data: {dismiss: "modal"} %>
+        </div>
+        <!--/. form element wrap -->
+
+      </div>
+      
+
     </div>
 
   <% end %>
-</div>
 <script>
-  $('.datepicker').datepicker();
+var dateToday = new Date(); 
+
+  $('.datepicker').datepicker({
+        minDate: dateToday,
+  });
+  $('.btnNext').click(function() {
+    $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+    const date = $("#booking_repair_date").val()
+    if (date) {
+      $.ajax ({
+        url: '/check_date?&date=' + date,
+      })
+    }
+  });
+
+  $('.btnPrevious').click(function() {
+    $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+  });
+
 </script>

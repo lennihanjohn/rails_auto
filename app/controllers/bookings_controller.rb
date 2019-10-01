@@ -14,6 +14,15 @@ class BookingsController < ApplicationController
 
     end
 
+    def check_date
+        p '............'
+        p params[:date]
+        p '............'
+        parse_date = Date.strptime(params[:date], '%m/%d/%Y')
+        day_of_date = parse_date.strftime("%A")
+        p DayOfWeek.find_by_day_of_week(day_of_date).day_of_business_hour
+    end
+
     private
     def booking_params
         params.require(:booking).permit(:is_active, :repair_date, :start_at, :end_at)

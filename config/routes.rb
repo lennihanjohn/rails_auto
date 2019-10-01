@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :type_of_repairs
   resources :vehicles
   resources :auto_histories
+  get '/check_date' => 'bookings#check_date', as: :check_date
 
   resources :bookings
   resources :business_hours 
