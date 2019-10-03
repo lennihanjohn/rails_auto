@@ -10,7 +10,7 @@
     </ul>
 
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="tab-pane fade show active setup-content" id="home" role="tabpanel" aria-labelledby="home-tab">
         <%= f.hidden_field :is_active,  value: true %>
 
         <div class="form-group col-xs-12">
@@ -31,7 +31,7 @@
 
         <div class="form-group col-xs-12">
           <%= f.label :repair_date, 'Pick a service date(维修日期)):' %><br/>
-          <%= f.text_field :repair_date, readonly:true, required: true, class: "form-control datepicker" %>
+          <%= f.text_field :repair_date, required: true, class: "form-control datepicker readonly" %>
         </div>
 
         <div class="form-group col-xs-12">
@@ -80,7 +80,10 @@
 
   <% end %>
 <script>
-var dateToday = new Date(); 
+  var dateToday = new Date(); 
+  $(".readonly").keydown(function(e){
+          e.preventDefault();
+      });
   $(document).ready(function () {
 
     $('.datepicker').datepicker({
@@ -88,46 +91,25 @@ var dateToday = new Date();
     });
     
     $('.btnNext').click(function() {
-      var form = $("#booking_form");
-      console.log(form)
-      form.validate({
-        rules: {
-          email: {
-            required: true,
-            email: true,
-          },
-          name: {
-            required: true,
-          },
-          phone_number: {
-            required: true,
-          },
-          address: {
-            required: true,
-          },
-          booking_repair_date: {
-            required: true,
-          },
-        },
-        messages: {
-          email: {
-            required: "Email is required",
-          },
-          name: {
-            required: "Name is required",
-          },        
-          phone_number: {
-            required: "phone number is required",
-          },
-          address: {
-            required: "address is required",
-          },
-          booking_repair_date: {
-            required: "Date is required",
-          },
+      var curStep = $(this).closest(".setup-content"),
+      curStepBtn = curStep.attr("id"),
+      nextStepWizard = $('.nav-tabs .active').parent().next('li').find('a')
+      curInputs = curStep.find("input[type='email'],input[type='text'],select"),
+      isValid = true;
+      currenttepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]');
+      $(".form-group").removeClass("border border-danger border-top-0 border-right-0 border-left-0");
+      console.log(curInputs.length)
+      for(var i=0; i<curInputs.length; i++){
+        if (!curInputs[i].validity.valid){
+          isValid = false;
+          $(curInputs[i]).closest(".form-group").addClass("border border-danger border-top-0 border-right-0 border-left-0");
         }
-      });
-      if (form.valid() == true){
+      }
+
+      if (isValid) {
+        nextStepWizard.removeAttr('disabled').trigger('click');
+        currenttepWizard.html("✔")
+        nextStepWizard.removeClass('inactiveLink')
         $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
         const date = $("#booking_repair_date").val()
         const service_type = $("#repair_type").val()
