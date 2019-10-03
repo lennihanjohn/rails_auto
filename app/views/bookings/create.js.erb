@@ -16,7 +16,7 @@
 console.log("hello")
 swal({
     title: "Oops",
-    text: "<%= @errors.html_safe %>",
+    text: '<%= raw @errors.join.html_safe%>',
     type: "error"
 })
 
