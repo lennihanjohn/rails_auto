@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_012323) do
+ActiveRecord::Schema.define(version: 2019_10_04_021842) do
 
   create_table "auto_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2019_09_27_012323) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "booking_id"
+    t.index ["booking_id"], name: "index_auto_histories_on_booking_id"
     t.index ["user_id"], name: "index_auto_histories_on_user_id"
     t.index ["vehicle_id"], name: "index_auto_histories_on_vehicle_id"
   end
@@ -61,7 +63,7 @@ ActiveRecord::Schema.define(version: 2019_09_27_012323) do
   create_table "type_of_repairs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.text "desc"
-    t.integer "repair_time"
+    t.float "repair_time"
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 2019_09_27_012323) do
     t.index ["user_id"], name: "index_vehicles_on_user_id"
   end
 
+  add_foreign_key "auto_histories", "bookings"
   add_foreign_key "auto_histories", "users"
   add_foreign_key "auto_histories", "vehicles"
   add_foreign_key "auto_history_types", "auto_histories"

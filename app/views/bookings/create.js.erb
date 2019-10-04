@@ -1,4 +1,4 @@
-<% if @errors.nil? %>
+<% if @errors.blank? %>
   swal({
     title: "success",
     text: "saved",
@@ -7,8 +7,8 @@
     allowEscapeKey: false
   }).then((result) => {
     if (result) {
-        $("#type_of_repair_modal").modal("hide")
-        $("#search_result").html("<%= j render partial: 'type_of_repairs/partials/table'%>")
+        $("#booking_modal").modal("hide")
+        $("#search_result").html("<%= j render partial: 'bookings/partials/table'%>")
     }
   });
 
@@ -16,7 +16,7 @@
 console.log("hello")
 swal({
     title: "Oops",
-    text: '<%= raw @errors.join.html_safe%>',
+    text: '<%=j raw @errors%>',
     type: "error"
 })
 

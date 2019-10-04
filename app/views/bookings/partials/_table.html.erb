@@ -1,23 +1,24 @@
 <table class="table">
     <thead class="thead-dark">
     <tr>
-        <th scope="col">Week day</th>
-        <th scope="col">start time</th>
-        <th scope="col">end time</th>
-        <th scope="col">overlap?</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone # </th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
         <th scope="col"></th>
 
         </tr>
     </thead>
     <tbody>
-        <% @business_hours.each do |day_of_week| %>
+        <% @bookings.each do |booking| %>
             <tr>
-                <td><%= day_of_week.day_of_week %></td>
-                <td><%= day_of_week.day_of_business_hour.open_at.strftime("%H:%M") %></td>
-                <td><%= day_of_week.day_of_business_hour.close_at.strftime("%H:%M")   %></td>
-                <td><%= day_of_week.day_of_business_hour.is_overlap ? '<i class="far fa-check-circle text-success"></i>'.html_safe : '<i class="far fa-times-circle text-danger"></i>'.html_safe  %></td>
+                <td><%= booking.user.name %></td>
+                <td><%= booking.user.phone_number %></td>
+                <td><%= booking.start_at.strftime("%H:%M %e/%m/%y") %></td>
+                <td><%= booking.end_at.strftime("%H:%M %e/%m/%y") %></td>
+                <td><%= booking.is_active ? '<i class="far fa-check-circle text-success"></i>'.html_safe : '<i class="far fa-times-circle text-danger"></i>'.html_safe  %></td>
                 <th>
-                    <%= link_to('<i class="fa fa-pen" aria-hidden="true"></i>'.html_safe, edit_day_of_business_hour_path(id:day_of_week.day_of_business_hour.id), class:"btn btn-info btn-sm", remote: true) %>
+                    <%#= link_to('<i class="fa fa-pen" aria-hidden="true"></i>'.html_safe, edit_day_of_business_hour_path(id:day_of_week.day_of_business_hour.id), class:"btn btn-info btn-sm", remote: true) %>
                 </th>
             </tr> 
         <% end %>

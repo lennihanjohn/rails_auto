@@ -8,6 +8,7 @@
 #  desc       :text(65535)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  booking_id :bigint
 #
 
 require 'test_helper'

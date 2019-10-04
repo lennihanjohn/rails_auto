@@ -14,19 +14,20 @@
     </div>
 
     <div class="garage-title form-check">
-      <%= f.label :is_overlap %>:
+      <%= f.label :is_overlap %>: 
       <%= f.label :is_overlap, "No", value: "false", class: 'form-check-label' %>
       <%= f.radio_button :is_overlap, false, checked: true %>
       <%= f.label :is_overlap, "Yes", value: "true", class: 'form-check-label' %>
       <%= f.radio_button :is_overlap, true %>
-
+      <br>
+      <span class='text-warning small p-3 '>No matter how many hours,system allows user to book if there is a empty gap between 2 appointment  </span>
     </div>
 
     <!-- action buttons -->
     <div class="form-group col-xs-12">
-        <%= f.submit "submit", class:"btn-success" %>
+        <%= f.submit "Submit", class:"btn-success" %>
         <%= link_to 'Close', "#", class: "btn-sm btn-light float-right", data: {dismiss: "modal"} %>
     </div>
 
-  <% end %>
-</div>
+  <% end %>     
+</div> 
