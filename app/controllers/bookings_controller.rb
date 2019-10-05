@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
     def index
-        @bookings = Booking.all.includes(:user).order("repair_date desc").paginate(page: params[:page])
+        @bookings = Booking.all.includes(:user).order(repair_date: :desc, start_at: :desc).paginate(page: params[:page])
         @bookings = params[:search].nil? ? @bookings : @bookings.search(params[:search])
         respond_to do |format|
             format.html 
@@ -15,12 +15,13 @@ class BookingsController < ApplicationController
     end
 
     def create
+        @errors = []
         has_space = true
         reserve_date = get_reserve_date(params[:booking][:repair_date])
         start_at = DateTime.parse(params[:reserve_time]).asctime.in_time_zone
         repair_type = TypeOfRepair.find_by(id: params[:repair][:type])
         if repair_type.nil?
-            @errors = "Please pick the service type!"
+            @errors << "Please pick the service type!"
         end
         end_at = start_at + (repair_type.repair_time).hour
 
@@ -32,24 +33,26 @@ class BookingsController < ApplicationController
         end
         
         unless has_space
-            @errors = "Someone booked on the time. Please pick another service time or date!"
+            @errors << "Someone booked on the time. Please pick another service time or date!"
         end
         # find or create user account by phone number 
-        if params['phone_number'].present? && has_space
+        if params['phone_number'].present? && has_space && !@errors.any?
             @user = User.find_or_create_by(email: params['email']) 
             #update user info if new record or email matches
             password = Devise.friendly_token.first(6)
             @user.update(name: params['name'], phone_number: params['phone_number'], address: params['address'], password: password) if @user.phone_number.nil? || params['phone_number'] == @user.phone_number 
             @vehicle = Vehicle.find_or_create_by(vin: params[:vehicle_vin])
+            @errors << @vehicle.errors.full_messages.map { |msg| content_tag(:li, msg) }
+
             @vehicle.update(vin: params[:vehicle_vin], 
                             year: params[:vehicle_year],
                             make: params[:vehicle_make],
                             model: params[:vehicle_model],
                             user: @user
                             ) if @vehicle.user.nil? || @user == @vehicle.user 
-            @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: params[:reserve_time], end_at: end_at.strftime("%H:%M %p") )
+            @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: params[:reserve_time], end_at: end_at.strftime("%H:%M %p"), auto_history_attributes: {user: @user, vehicle: @vehicle, desc: params[:desc]} )
             if !@booking.save
-                @booking.errors.full_messages.map { |msg| content_tag(:li, msg) }
+                @errors << @booking.errors.full_messages.map { |msg| content_tag(:li, msg) }
             end
         end
 

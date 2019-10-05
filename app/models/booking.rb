@@ -15,6 +15,8 @@
 class Booking < ApplicationRecord
     belongs_to :user
     has_one :auto_history
+    accepts_nested_attributes_for :auto_history
+
     def self.search(search)
         self.where("repair_date like ?", "%#{search}%" )
     end

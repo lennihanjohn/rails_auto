@@ -16,4 +16,6 @@ class AutoHistory < ApplicationRecord
     belongs_to :vehicle
     belongs_to :user
     belongs_to :booking
+    accepts_nested_attributes_for :auto_history_types
+
 end
