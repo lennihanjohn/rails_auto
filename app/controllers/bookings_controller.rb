@@ -17,14 +17,12 @@ class BookingsController < ApplicationController
     def create
         has_space = true
         reserve_date = get_reserve_date(params[:booking][:repair_date])
-        start_at = DateTime.parse(params[:reserve_time])
+        start_at = DateTime.parse(params[:reserve_time]).asctime.in_time_zone
         repair_type = TypeOfRepair.find_by(id: params[:repair][:type])
         if repair_type.nil?
             @errors = "Please pick the service type!"
         end
-        end_at = start_at + (repair_type.repair_time).to_i.hour
-
-        p "reserve date #{reserve_date} -- #{start_at} -- #{end_at}"
+        end_at = start_at + (repair_type.repair_time).hour
 
         @all_existing_bookings = Booking.where(repair_date: reserve_date)
         if @all_existing_bookings.count > 0
@@ -32,6 +30,7 @@ class BookingsController < ApplicationController
                 has_space = false if not (booking.end_at <= start_at || end_at <= booking.start_at)
             end
         end
+        
         unless has_space
             @errors = "Someone booked on the time. Please pick another service time or date!"
         end
@@ -48,7 +47,7 @@ class BookingsController < ApplicationController
                             model: params[:vehicle_model],
                             user: @user
                             ) if @vehicle.user.nil? || @user == @vehicle.user 
-            @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: params[:reserve_time], end_at: end_at )
+            @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: params[:reserve_time], end_at: end_at.strftime("%H:%M %p") )
             if !@booking.save
                 @booking.errors.full_messages.map { |msg| content_tag(:li, msg) }
             end
@@ -61,18 +60,40 @@ class BookingsController < ApplicationController
     end
 
     def check_date
-        reserve_date = get_reserve_date(params[:date]).strftime("%A")  
-        business_hour = DayOfWeek.find_by_day_of_week(reserve_date).day_of_business_hour
-        @start_at = business_hour.open_at.strftime("%H:%M %p")
-        @close_at = business_hour.close_at.strftime("%H:%M %p")
-        @values =(DateTime.parse(@start_at).to_i..DateTime.parse(@close_at).to_i).step(30.minutes)
-        @business_hour = @values.map{ |t| [ Time.at(t).utc.to_datetime.strftime("%H:%M %p"), Time.at(t).utc.to_datetime.strftime("%H:%M %p") ]}
+        repair_time = TypeOfRepair.find_by(id: params[:service_type]).repair_time
+        reserve_date = get_reserve_date(params[:date]) 
+        business_hour = DayOfWeek.find_by_day_of_week(reserve_date.strftime("%A") ).day_of_business_hour
+        # @start_at = business_hour.open_at
+        # @close_at = business_hour.close_at
+        @values =(DateTime.parse(business_hour.open_at.strftime("%H:%M %p")).to_i..DateTime.parse(business_hour.close_at.strftime("%H:%M %p")).to_i).step(30.minutes)
+        # @business_hour = @values.map{ |t| [ Time.at(t).utc.to_datetime.strftime("%H:%M %p"), Time.at(t).utc.to_datetime.strftime("%H:%M %p") ]}
+        @business_hour = find_all_avaiable_start_times(reserve_date, @values, repair_time)
+
         respond_to do |format|
             format.js
         end
     end
 
     private
+
+    def find_all_avaiable_start_times(reserve_date, values, repair_time)
+        avaiable_start_time = []
+        @all_existing_bookings = Booking.where(repair_date: reserve_date)
+        is_more_than_one = @all_existing_bookings.count > 0
+        values.each do |time|
+            start_at = DateTime.parse(Time.at(time).utc.to_datetime.strftime("%H:%M %p")).asctime.in_time_zone
+            end_at = start_at + (repair_time).hour
+            has_space = true
+            if is_more_than_one 
+                @all_existing_bookings.each do |booking|
+                    has_space = false if not (booking.end_at <= start_at || end_at <= booking.start_at)
+                end
+            end
+            avaiable_start_time << Time.at(time).utc.to_datetime.strftime("%H:%M %p") if has_space
+        end
+        return avaiable_start_time
+    end
+
     def booking_params
         params.require(:booking).permit(:is_active, :repair_date, :start_at, :end_at)
     end
