@@ -2,38 +2,38 @@
 <div class="sidebar-wrapper">
     <ul class="nav">
         <li class="nav-item active ">
-            <%= link_to(pages_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(pages_path, class:"nav-link") do %>
                 <i class="fas fa-home"></i>
                 <p>Dashboard</p>
             <% end %>
         </li>
 
         <li class="nav-item ">
-            <%= link_to(vehicles_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(vehicles_path, class:"nav-link") do %>
             <i class="fas fa-car"></i>
                 <p>Vehicles</p>
             <% end %>
         </li>
         <li class="nav-item ">
-            <%= link_to(type_of_repairs_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(type_of_repairs_path, class:"nav-link") do %>
                 <i class="fas fa-tools"></i>
                 <p>Service types</p>
             <% end %>
         </li>
         <li class="nav-item ">
-            <%= link_to(day_of_business_hours_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(day_of_business_hours_path, class:"nav-link") do %>
                 <i class="far fa-clock"></i>
                 <p>Business hours</p>
             <% end %>
         </li>
         <li class="nav-item ">
-            <%= link_to(bookings_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(bookings_path, class:"nav-link") do %>
                 <i class="fas fa-calendar-week"></i>
                 <p>booking</p>
             <% end %>
         </li>
         <li class="nav-item ">
-            <%= link_to(users_path, class:"nav-link", data: { turbolinks: false }) do %>
+            <%= link_to(users_path, class:"nav-link") do %>
                 <i class="fas fa-users"></i>
                 <p>Users</p>
             <% end %>
@@ -46,3 +46,9 @@
         </li>
     </ul> 
 </div>
+
+<script>
+    $(".nav-link").click(function(){
+        $('html').removeClass( "nav-open" );
+    })
+</script>
