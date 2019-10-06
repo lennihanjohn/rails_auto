@@ -18,7 +18,7 @@ class Booking < ApplicationRecord
     accepts_nested_attributes_for :auto_history
 
     def self.search(search)
-        self.where("repair_date like ?", "%#{search}%" )
+        self.joins(:user).where("users.name like ? or users.phone_number like ? or repair_date like ?", "%#{search}%", "%#{search}%", "%#{search}%" )
     end
 
 end

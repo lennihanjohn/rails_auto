@@ -39,6 +39,6 @@ class User < ApplicationRecord
   end
   
   def self.search(search)
-      self.where("email like ? Or name like ? Or phone_number like ? ", "%#{search}%", "%#{search}%", "%#{search}%")
+      self.joins(:vehicles).where("email like ? Or name like ? Or phone_number like ? or vehicles.vin", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 end

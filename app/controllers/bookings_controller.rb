@@ -53,7 +53,7 @@ class BookingsController < ApplicationController
             end
         end
 
-        @bookings = Booking.all.includes(:user).paginate(page: params[:page])
+        @bookings = Booking.all.includes(:user).order(repair_date: :desc, start_at: :desc).paginate(page: params[:page])
         respond_to do |format|
             format.js
         end
