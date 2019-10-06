@@ -18,11 +18,8 @@ class BookingsController < ApplicationController
         @errors = []
         has_space = true
         reserve_date = get_reserve_date(params[:booking][:repair_date])
-        start_at = DateTime.parse(params[:reserve_time]).asctime.in_time_zone
+        start_at = DateTime.strptime("#{reserve_date.strftime("%m-%d-%Y")} #{params[:reserve_time]}",  '%m-%d-%Y %H:%M').asctime.in_time_zone
         repair_type = TypeOfRepair.find_by(id: params[:repair][:type])
-        if repair_type.nil?
-            @errors << "Please pick the service type!"
-        end
         end_at = start_at + (repair_type.repair_time).hour
 
         @all_existing_bookings = Booking.where(repair_date: reserve_date)
@@ -32,27 +29,27 @@ class BookingsController < ApplicationController
             end
         end
         
-        unless has_space
-            @errors << "Someone booked on the time. Please pick another service time or date!"
-        end
+        @errors << "Please pick the service type!" if repair_type.nil?
+        @errors << "Someone booked on the time. Please pick another service time or date!" unless has_space
+
         # find or create user account by phone number 
         if params['phone_number'].present? && has_space && !@errors.any?
             @user = User.find_or_create_by(email: params['email']) 
             #update user info if new record or email matches
             password = Devise.friendly_token.first(6)
             @user.update(name: params['name'], phone_number: params['phone_number'], address: params['address'], password: password) if @user.phone_number.nil? || params['phone_number'] == @user.phone_number 
-            @vehicle = Vehicle.find_or_create_by(vin: params[:vehicle_vin])
-            @errors << @vehicle.errors.full_messages.map { |msg| content_tag(:li, msg) }
+            @vehicle = Vehicle.find_or_create_by(user: @user, vin: params[:vehicle_vin])
+            p  'vehicle: ' + @vehicle.errors.full_messages.inspect
 
-            @vehicle.update(vin: params[:vehicle_vin], 
-                            year: params[:vehicle_year],
-                            make: params[:vehicle_make],
-                            model: params[:vehicle_model],
-                            user: @user
-                            ) if @vehicle.user.nil? || @user == @vehicle.user 
-            @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: params[:reserve_time], end_at: end_at.strftime("%H:%M %p"), auto_history_attributes: {user: @user, vehicle: @vehicle, desc: params[:desc]} )
-            if !@booking.save
-                @errors << @booking.errors.full_messages.map { |msg| content_tag(:li, msg) }
+            @errors << @vehicle.errors.full_messages.map { |msg| content_tag(:li, msg) } unless @vehicle.save(  vin: params[:vehicle_vin], 
+                                                                                                                year: params[:vehicle_year],
+                                                                                                                make: params[:vehicle_make],
+                                                                                                                model: params[:vehicle_model],
+                                                                                                                user: @user
+                                                                                                                ) if @errors.empty? && (@vehicle.user.nil? || @user == @vehicle.user )
+            if @errors.empty? 
+                @booking = Booking.new(user: @user, repair_date: reserve_date, start_at: start_at, end_at: end_at, desc: params[:desc], auto_history_attributes: {user: @user, vehicle: @vehicle} ) 
+                @errors << @booking.errors.full_messages.map { |msg| content_tag(:li, msg) } unless  @booking.save
             end
         end
 
@@ -66,12 +63,8 @@ class BookingsController < ApplicationController
         repair_time = TypeOfRepair.find_by(id: params[:service_type]).repair_time
         reserve_date = get_reserve_date(params[:date]) 
         business_hour = DayOfWeek.find_by_day_of_week(reserve_date.strftime("%A") ).day_of_business_hour
-        # @start_at = business_hour.open_at
-        # @close_at = business_hour.close_at
-        @values =(DateTime.parse(business_hour.open_at.strftime("%H:%M %p")).to_i..DateTime.parse(business_hour.close_at.strftime("%H:%M %p")).to_i).step(30.minutes)
-        # @business_hour = @values.map{ |t| [ Time.at(t).utc.to_datetime.strftime("%H:%M %p"), Time.at(t).utc.to_datetime.strftime("%H:%M %p") ]}
+        @values =(DateTime.parse(business_hour.open_at.strftime("%H:%M")).to_i..DateTime.parse(business_hour.close_at.strftime("%H:%M")).to_i).step(30.minutes)
         @business_hour = find_all_avaiable_start_times(reserve_date, @values, repair_time)
-
         respond_to do |format|
             format.js
         end
@@ -84,17 +77,20 @@ class BookingsController < ApplicationController
         @all_existing_bookings = Booking.where(repair_date: reserve_date)
         is_more_than_one = @all_existing_bookings.count > 0
         values.each do |time|
-            start_at = DateTime.parse(Time.at(time).utc.to_datetime.strftime("%H:%M %p")).asctime.in_time_zone
+            #parse reserve_date into time with timezone
+            start_at = DateTime.parse(Time.at(time).utc.to_datetime.strftime("%H:%M")).change(year: reserve_date.year, month: reserve_date.month, day: reserve_date.day).asctime.in_time_zone
             end_at = start_at + (repair_time).hour
             has_space = true
             if is_more_than_one 
                 @all_existing_bookings.each do |booking|
                     has_space = false if not (booking.end_at <= start_at || end_at <= booking.start_at)
+                    avaiable_start_time << Time.at(time).utc.to_datetime.strftime("%H:%M") if has_space
                 end
+            else
+                avaiable_start_time << Time.at(time).utc.to_datetime.strftime("%H:%M") if has_space
             end
-            avaiable_start_time << Time.at(time).utc.to_datetime.strftime("%H:%M %p") if has_space
         end
-        return avaiable_start_time
+        return avaiable_start_time.uniq
     end
 
     def booking_params

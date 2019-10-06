@@ -13,7 +13,7 @@
     <tbody>
         <% @bookings.each do |booking| %>
             <tr>
-                <td><%= booking.user.name %></td>
+                <td><%= booking.id.to_s + "," + booking.user.name %></td>
                 <td><%= booking.user.phone_number %></td>
                 <td><%= booking.repair_date.strftime('%b/%d/%Y') %></td>
                 <td><%= booking.start_at.strftime("%H:%M %p") %></td>
